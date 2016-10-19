@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <div>
+      <ul>
+        <% for(var i = 0; i < products.length; i++) { %>
+          <li><%= products[i].title %> - <%= products[i].price.value %>
+            <a href="/store/detail/<%= products[i].id %>">BUY NOW</a>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>

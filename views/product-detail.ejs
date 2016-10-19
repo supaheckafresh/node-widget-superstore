@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= product.title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1><%= product.title %></h1>
+    <p>Holy crap! You definitely need a <b><%= product.title %></b> in your life RIGHT NOW!!</p>
+    <div>
+      <form method="POST" action="/store/cart">
+        <input type="hidden" name="product" value="<%= JSON.stringify(product) %>">
+        <div>OK let's do this --> <button type="submit"><%= product.price.value %></button></div>
+      </form>
+      <img src="<%= product.images[0].url.http %>" style="max-width: 300px;">
+    </div>
+  </body>
+</html>
