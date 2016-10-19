@@ -2,12 +2,26 @@ var express = require('express');
 var router = express.Router();
 var store = require('../modules/moltin');
 
+let cartId;
+
+/**
+ * Initialize an empty cart in our store.
+ */
+function initOrder() {
+  store.initOrder()
+    .then(resp => cartId = JSON.parse(resp).result.id);
+}
+
 /**
  * Whenever we encounter a route with :product, get the product from the
  * store, and put it on the request.
  */
 router.param('product', (req, res, next, id) => {
-  console.log('IN HERE', id);
+  store.getProduct(id)
+    .then(resp => {
+      req.product = JSON.parse(resp).result;
+      next();
+    });
 });
 
 /**
@@ -15,6 +29,7 @@ router.param('product', (req, res, next, id) => {
  */
 router.get('/', (req, res, next) => {
   store.authenticate()
+    .then(initOrder)
     .then(store.getProducts)
     .then(resp => {
 
@@ -33,24 +48,23 @@ router.get('/', (req, res, next) => {
 /**
  * Product detail
  */
-router.get('/detail/:productId', (req, res, next) => {
-  store.getProduct(req.params.productId)
-    .then(resp => {
-      let product = JSON.parse(resp).result;
-      
-      res.render('product-detail', { product });
-    });
+router.get('/detail/:product', (req, res, next) => {
+  res.render('product-detail', {
+    product: req.product
+  });
 });
 
 /**
- * Initialize an order & add the product
+ * Add an item to the cart.
  */
-router.post('/cart', (req, res, next) => {
-  let product = req.body.product;
-
-  store.initOrder()
-  //TODO: Initialize a new cart in the main route, add that to the req and allow addition of multiple items.
-    .then(resp => res.json(JSON.parse(product)));
+router.post('/cart/:product', (req, res, next) => {
+  store.addToCart(cartId, req.product.id)
+    .then(resp => {
+      res.json({
+        ALRIGHTY: 'That seems to have worked',
+        'This product was added to your cart': JSON.parse(resp).result
+      })
+    });
 });
 
 module.exports = router;

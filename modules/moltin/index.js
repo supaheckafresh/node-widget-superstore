@@ -94,12 +94,28 @@ function initOrder() {
   return rp.post(req);
 }
 
+/**
+ * Users can add products to their cart.
+ *
+ * @param cartId
+ * @param productId
+ */
+function addToCart(cartId, productId) {
+  let req = makeRequestObj(`${ECOMMERCE_BASE_URL}/orders/${cartId}/items`, {
+    id: productId,
+    quantity: 1
+  });
+
+  return rp.post(req);
+}
+
 module.exports = {
   authenticate,
+  initOrder,
   getProducts,
   getProduct,
   getCustomers,
-  initOrder
+  addToCart
 };
 
 

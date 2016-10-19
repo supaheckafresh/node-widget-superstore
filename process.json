@@ -1,8 +1,9 @@
 {
   "apps" : [{
-    "name"        : "widgetSuperstore",
-    "script"      : "bin/www",
-    "watch"       : "../",
-    "log_date_format"  : "YYYY-MM-DD HH:mm Z"
+    "name" : "widgetSuperstore",
+    "script" : "bin/www",
+    "watch" : ["modules", "public", "routes", "views", "bin"],
+    "watch_options" : {"usePolling": true},
+    "log_date_format" : "YYYY-MM-DD HH:mm Z"
   }]
 }
