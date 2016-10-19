@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "env $(cat .env) pm2 start bin/www --watch && pm2 logs"
+    "start": "env $(cat .env) pm2 start process.json && pm2 logs"
   },
   "dependencies": {
     "bluebird": "^3.4.6",
