@@ -1,10 +1,13 @@
-var _ = require('lodash'),
+'use strict';
+
+const _ = require('lodash'),
 //TODO: kill these \r chars that are appended when sourcing the .env
   ECOMMERCE_BASE_URL = _.replace(process.env.MOLTIN_API_V1, '\r', ''),
   ECOMMERCE_CLIENT_ID = _.replace(process.env.MOLTIN_CLIENT_ID, '\r', ''),
   ECOMMERCE_CLIENT_SECRET = _.replace(process.env.MOLTIN_CLIENT_SECRET, '\r', ''),
-  rp = require('request-promise'),
-  currentAuthToken = null;
+  rp = require('request-promise');
+
+  let currentAuthToken = null;
 
 /**
  * Get an authorization token from Moltin which we can use
